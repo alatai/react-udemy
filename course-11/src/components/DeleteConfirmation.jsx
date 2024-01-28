@@ -7,7 +7,6 @@ const TIMER = 3000
 const DeleteConfirmation = ({ onConfirm, onCancel }) => {
 
   useEffect(() => {
-    console.log('TIMER SET')
     // 给定时间后到期的计时器
     const timer = setTimeout(() => {
       onConfirm()
@@ -18,7 +17,6 @@ const DeleteConfirmation = ({ onConfirm, onCancel }) => {
     // 还可以定义一个清理函数，这个清理函数应该在这个效果函数再次运行之前执行
     // 或者在这个组件卸载之前，React会执行这个函数
     return () => {
-      console.log('Cleaning up timer')
       clearTimeout(timer)
     }
     // 添加函数作为依赖项时，存在创建无限循环的危险
