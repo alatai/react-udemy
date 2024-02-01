@@ -1,24 +1,46 @@
-import { useEffect, useState } from 'react'
+import { useState, useCallback } from 'react'
 
 import QUESTIONS from '../questions'
 import quizCompleteImg from '../assets/quiz-complete.png'
 import QuestionTimer from './QuestionTimer'
+import Answers from './Answers'
 
 const Quiz = () => {
+  const [answerState, setAnswerState] = useState('')
   const [userAnswers, setUserAnswers] = useState([])
 
-  useEffect(() => {
-
-  }, [])
-
-  const activeQuestionIndex = userAnswers.length
+  const activeQuestionIndex =
+    answerState === '' ? userAnswers.length : userAnswers.length - 1
   const quizIsComplete = activeQuestionIndex === QUESTIONS.length
 
-  const handleSelectAnswer = (selectedAnswer) => {
-    setUserAnswers((prevUserAnswers) => {
-      return [...prevUserAnswers, selectedAnswer]
-    })
-  }
+  const handleSelectAnswer = useCallback(
+    (selectedAnswer) => {
+      setAnswerState('answered')
+      setUserAnswers((prevUserAnswers) => {
+        return [...prevUserAnswers, selectedAnswer]
+      })
+
+      setTimeout(() => {
+        if (selectedAnswer === QUESTIONS[activeQuestionIndex].answers[0]) {
+          setAnswerState('correct')
+        } else {
+          setAnswerState('wrong')
+        }
+
+        setTimeout(() => {
+          setAnswerState('')
+        }, 2000)
+      }, 1000)
+
+      // 每当question索引值改变时重新创建
+    },
+    [activeQuestionIndex]
+  )
+
+  // useCallback缓存函数，以确保在依赖未发生变化时，返回相同的函数引用
+  const handleSkipAnswer = useCallback(() => {
+    handleSelectAnswer(null)
+  }, [handleSelectAnswer])
 
   if (quizIsComplete) {
     return (
@@ -29,21 +51,21 @@ const Quiz = () => {
     )
   }
 
-  const shuffledAnswers = [...QUESTIONS[activeQuestionIndex].answers]
-  shuffledAnswers.sort(() => Math.random() - 0.5)
-
   return (
     <div id="quiz">
       <div id="question">
-        <QuestionTimer timeout={1000 * 10} onTimerout={() => handleSelectAnswer(null)} />
+        <QuestionTimer
+          key={activeQuestionIndex}
+          timeout={1000 * 10}
+          onTimeout={handleSkipAnswer}
+        />
         <h2>{QUESTIONS[activeQuestionIndex].text}</h2>
-        <ul id="answers">
-          {shuffledAnswers.map(answer => (
-            <li key={answer} className="answer">
-              <button onClick={() => { handleSelectAnswer(answer) }}>{answer}</button>
-            </li>
-          ))}
-        </ul>
+        <Answers
+          answers={QUESTIONS[activeQuestionIndex].answers}
+          selectedAnswer={userAnswers[userAnswers.length - 1]}
+          answerState={answerState}
+          onSelect={handleSelectAnswer}
+        />
       </div>
     </div>
   )

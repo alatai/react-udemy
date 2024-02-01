@@ -1,9 +1,7 @@
-import Header from "./components/Header";
-import Quiz from "./components/Quiz";
+import Header from './components/Header'
+import Quiz from './components/Quiz'
 
 const App = () => {
-
-
   return (
     <>
       <Header />
@@ -14,4 +12,4 @@ const App = () => {
   )
 }
 
-export default App;
+export default App

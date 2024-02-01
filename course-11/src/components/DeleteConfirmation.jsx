@@ -5,7 +5,6 @@ import ProgressBar from './ProgressBar'
 const TIMER = 3000
 
 const DeleteConfirmation = ({ onConfirm, onCancel }) => {
-
   useEffect(() => {
     // 给定时间后到期的计时器
     const timer = setTimeout(() => {
