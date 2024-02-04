@@ -2,7 +2,7 @@ import { useRef } from 'react'
 
 const Answers = ({ answers, selectedAnswer, answerState, onSelect }) => {
   // 可以使用refs来管理独立于它们所属的组件函数生命周期存储和管理的值
-  const shuffledAnswers = useRef
+  const shuffledAnswers = useRef()
 
   if (!shuffledAnswers.current) {
     shuffledAnswers.current = [...answers]
@@ -31,6 +31,7 @@ const Answers = ({ answers, selectedAnswer, answerState, onSelect }) => {
             <button
               onClick={() => onSelect(answer)}
               className={cssClasses}
+              disabled={answerState !== ''}
             >
               {answer}
             </button>
