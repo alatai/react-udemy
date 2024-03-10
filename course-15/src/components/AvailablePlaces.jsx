@@ -1,6 +1,6 @@
-import Places from './Places.jsx';
+import Places from './Places.jsx'
 
-export default function AvailablePlaces({ onSelectPlace }) {
+const AvailablePlaces = ({ onSelectPlace }) => {
   return (
     <Places
       title="Available Places"
@@ -8,5 +8,7 @@ export default function AvailablePlaces({ onSelectPlace }) {
       fallbackText="No places available."
       onSelectPlace={onSelectPlace}
     />
-  );
+  )
 }
+
+export default AvailablePlaces
