@@ -1,4 +1,4 @@
-import { useRef, useState, useCallback, useEffect } from 'react'
+import { useRef, useState, useCallback } from 'react'
 
 import Places from './components/Places.jsx'
 import Modal from './components/Modal.jsx'
@@ -7,33 +7,22 @@ import logoImg from './assets/logo.png'
 import AvailablePlaces from './components/AvailablePlaces.jsx'
 import { fetchUserPlaces, updateUserPlaces } from './http.js'
 import Error from './components/Error.jsx'
+import { useFetch } from './hooks/useFetch.js'
 
 const App = () => {
   const selectedPlace = useRef()
-
-  const [userPlaces, setUserPlaces] = useState([])
-  const [isFetching, setIsFetching] = useState(false)
-  const [error, setError] = useState()
 
   const [errorUpdatingPlaces, setErrorUpdatingPlaces] = useState()
 
   const [modalIsOpen, setModalIsOpen] = useState(false)
 
-  useEffect(() => {
-    const fetchPlaces = async () => {
-      setIsFetching(true)
-      try {
-        const places = await fetchUserPlaces()
-        setUserPlaces(places)
-      } catch (error) {
-        setError({ message: error.message || 'Failed to fetch user places.' })
-      }
-
-      setIsFetching(false)
-    }
-
-    fetchPlaces()
-  }, [])
+  // 如果使用了自定义Hooks，那么该自定义Hooks管理的任何状态都将属于正在使用自定义Hooks的组件
+  const {
+    isFetching,
+    fetchedData: userPlaces,
+    setFetchedData: setUserPlaces,
+    error,
+  } = useFetch(fetchUserPlaces, [])
 
   const handleStartRemovePlace = (place) => {
     setModalIsOpen(true)
@@ -88,7 +77,7 @@ const App = () => {
 
       setModalIsOpen(false)
     },
-    [userPlaces]
+    [userPlaces, setUserPlaces]
   )
 
   const handleError = () => {
@@ -142,3 +131,14 @@ const App = () => {
 }
 
 export default App
+
+/**
+ * Rules of Hooks
+ * 1.Only call Hooks in Component or Other Hook Functions
+ *    React Hooks must not be called outside of React component functions or other Hook functions
+ * 2.Only call Hooks on the top level
+ *    React Hooks must not be in nested code statements(e.g., inside of if-statements)
+ *
+ * 构建自定义Hooks背后的想法始终是包装和重用进入组件函数的代码
+ * 自定义Hooks将是我们可以从不同位置调用的函数，但它们将是保证在有效位置使用的函数
+ */
