@@ -1,9 +1,14 @@
-import { useEffect, useState } from 'react'
+// import { useEffect, useState } from 'react'
+import Error from './Error.jsx'
 import MealItem from './MealItem.JSX'
+import { useHttp } from './hooks/useHttp.js'
+
+const requestConfig = {}
 
 const Meals = () => {
+  /*
   const [loadedMeals, setLoadedMeals] = useState([])
-
+  
   useEffect(() => {
     // React不允许将组件函数转换为async函数
     const fetchMeals = async () => {
@@ -26,6 +31,25 @@ const Meals = () => {
     // 可能必须使用useCallback，以避免每次重新执行组件函数时都发生变化
   }, [])
   // }, [fetchMeals])
+  */
+
+  const {
+    // loadedMeals的初始值在请求完成之前都是未定义的
+    // 组件函数不会等待请求完成才能工作
+    // JSX代码将被解析并立即转换为HTML代码
+    data: loadedMeals,
+    isLoading,
+    error,
+    // initialData：确保第一次渲染时，不会输出任何项目
+  } = useHttp('http://localhost:3000/meals', requestConfig, [])
+
+  if (isLoading) {
+    return <p className="center">Fetching meals...</p>
+  }
+
+  if (error) {
+    return <Error title="Failed to fetch meals" message={error} />
+  }
 
   return (
     <ul id="meals">
