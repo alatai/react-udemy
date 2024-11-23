@@ -24,6 +24,10 @@ module.exports = {
     // "react/jsx-uses-react": "off",
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
-    "react/no-unescaped-entities": "off"
+    'react/no-unescaped-entities': 'off',
+    // 'no-unused-vars': [
+    //   'warn',
+    //   { vars: 'all', args: 'after-used', ignoreRestSiblings: true },
+    // ],
   },
 }
