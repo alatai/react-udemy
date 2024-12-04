@@ -1,11 +1,1 @@
-{
-  "events": [
-    {
-      "id": "e1",
-      "title": "A dummy event",
-      "date": "2023-02-22",
-      "image": "https://blog.hubspot.de/hubfs/Germany/Blog_images/Optimize_Marketing%20Events%20DACH%202021.jpg",
-      "description": "Join this amazing event and connect with fellow developers."
-    }
-  ]
-}
+{"events":[{"title":"Another new event","image":"https://www.meydanfz.ae/wp-content/uploads/2021/10/Events-1024x576.png","date":"2024-12-06","description":"Another new event","id":"c87cbfdf-0d0b-44fa-8e21-4eb4d93006e8"},{"title":"A new event has been edited","image":"https://www.eventbrite.com/blog/wp-content/uploads/2022/08/image3-min-1.png","date":"2024-12-06","description":"Some awesome events","id":"c261d550-34ed-4dcb-9ba1-9f6b9880c250"},{"id":"e1","title":"A dummy event","date":"2023-02-22","image":"https://blog.hubspot.de/hubfs/Germany/Blog_images/Optimize_Marketing%20Events%20DACH%202021.jpg","description":"Join this amazing event and connect with fellow developers."}]}
