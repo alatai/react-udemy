@@ -3,6 +3,7 @@ import { useRouteLoaderData, redirect, Await } from 'react-router-dom'
 
 import EventItem from '../components/EventItem'
 import EventsList from '../components/EventsList'
+import { getAuthToken } from '../util/auth'
 
 function EventDetailPage() {
   const { event, events } = useRouteLoaderData('event-detail')
@@ -67,8 +68,14 @@ export async function loader({ params }) {
 
 export async function action({ params, request }) {
   const eventId = params.eventId
+  const token = getAuthToken()
+
   const response = await fetch('http://localhost:8080/events/' + eventId, {
     method: request.method,
+    headers: {
+      // 添加特殊的授权头部，设置其值为“Bearer token值”
+      Authorization: 'Bearer ' + token,
+    },
   })
 
   if (!response.ok) {

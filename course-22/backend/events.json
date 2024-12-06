@@ -1,12 +1,1 @@
-{
-  "events": [
-    {
-      "title": "A new event",
-      "image": "https://www.eventbrite.com/blog/wp-content/uploads/2022/08/image3-min-1.png",
-      "date": "2022-10-01",
-      "description": "Some awesome event!",
-      "id": "2a42fcc4-ea21-4bdd-abf6-c40006dc66a9"
-    }
-  ],
-  "users": []
-}
+{"events":[{"title":"Testsss","image":"https://sydneyeventsstudio.com/wp-content/uploads/2022/11/video-for-event-marketing.jpg","date":"2024-12-13","description":"For test","id":"649c7622-455d-4f0f-92e2-ffed79c4f9c9"}],"users":[{"email":"test@test.com","password":"$2a$12$qhDwMIIETRySiGJlrBMQwu4XvgtN73Q4Ut3okB5leZYIu/lTW.VYe","id":"3331a909-fbe6-4bb1-b278-8d8fee24ed96"},{"email":"test1@test.com","password":"$2a$12$UfKQ2uxbV/F./8rBvR3F8ud6QER9oHk0VQUDS4F72ibl6dzaufoOC","id":"d54f1f12-de5c-4b71-ab54-8237a45fe7bc"}]}

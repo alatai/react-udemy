@@ -13,14 +13,32 @@ import NewEventPage from './pages/NewEvent'
 import RootLayout from './pages/Root'
 import { action as manipulateEventAction } from './components/EventForm'
 import NewsletterPage, { action as newsletterAction } from './pages/Newsletter'
+import AuthenticationPage, {
+  action as authAction,
+} from './pages/Authentication'
+import { action as logoutAction } from './pages/Logout'
+import { tokenLoader, checkAuthLoader } from './util/auth'
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <RootLayout />,
     errorElement: <ErrorPage />,
+    id: 'root',
+    // 解决根据token更新UI问题，添加一个加载器
+    // 它只需要查看本地存储并从本地存储中提取token
+    // 然后，该token将通过该根路由的加载器在所有其他路由中可用
+    // React 路由会自动检测，当我们注销，并且提交注销表单
+    // 它将重新获取token，确定token不存在时，更新使用该根路由加载器的所有页面
+    loader: tokenLoader,
     children: [
       { index: true, element: <HomePage /> },
+      // 整个路由的兄弟路由
+      {
+        path: 'auth',
+        element: <AuthenticationPage />,
+        action: authAction,
+      },
       {
         path: 'events',
         element: <EventsRootLayout />,
@@ -44,6 +62,7 @@ const router = createBrowserRouter([
                 path: 'edit',
                 element: <EditEventPage />,
                 action: manipulateEventAction,
+                loader: checkAuthLoader,
               },
             ],
           },
@@ -51,6 +70,7 @@ const router = createBrowserRouter([
             path: 'new',
             element: <NewEventPage />,
             action: manipulateEventAction,
+            loader: checkAuthLoader,
           },
         ],
       },
@@ -58,6 +78,10 @@ const router = createBrowserRouter([
         path: 'newsletter',
         element: <NewsletterPage />,
         action: newsletterAction,
+      },
+      {
+        path: 'logout',
+        action: logoutAction,
       },
     ],
   },
